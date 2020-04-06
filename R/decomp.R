@@ -343,7 +343,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 776 	if(f_PO_SO_agg > 0.9 * POM) then
   # 777 	f_PO_SO_agg = 0.9 * POM
   # 778 	end if
-  f_PO_SO_agg <- max(f_PO_SO_agg, 0.9 * POM)
+  f_PO_SO_agg <- min(f_PO_SO_agg, 0.9 * POM)
   # 779
   # 780 !	print *, "POM > soilAGG: ",  f_PO_SO_agg, Vpom_agg, POM, kpom_agg, SOILAGG, AGGmax
   # 781
@@ -357,7 +357,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 787 	if(f_MI_SO_agg>0.9 * MINERAL) then
   # 788 	f_MI_SO_agg = 0.9 * MINERAL
   # 789 	end if
-  f_MI_SO_agg <- max(f_MI_SO_agg, 0.9 * MINERAL)
+  f_MI_SO_agg <- min(f_MI_SO_agg, 0.9 * MINERAL)
   # 790
   # 791 	! SOILAGG -> MINERAL
   # 792 	if (SOILAGG > 0._r8) then
