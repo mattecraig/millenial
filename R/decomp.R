@@ -314,7 +314,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 759 	if(f_MB_MI_sor > 0.9 * MB) then
   # 760 	f_MB_MI_sor = 0.9 * MB
   # 761 	end if
-  f_MB_MI_sor <- max(f_MB_MI_sor, 0.9 * MB)
+  f_MB_MI_sor <- min(f_MB_MI_sor, 0.9 * MB)
   # 762 	if(f_MB_MI_sor < 0.) then
   # 763 	f_MB_MI_sor = 0.
   # 764 	end if
