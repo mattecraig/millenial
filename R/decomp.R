@@ -290,7 +290,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 741 	if(f_PO_LM_dep > (0.9 * POM)) then
   # 742 	f_PO_LM_dep = 0.9 * POM
   # 743 	end if
-  f_PO_LM_dep <- max(f_PO_LM_dep,  0.9 * POM)
+  f_PO_LM_dep <- min(f_PO_LM_dep,  0.9 * POM)
   # 744
   # 745 !	print *, f_PO_LM_dep, Vpom_lmc, POM, kpom, MB, k_POMes
   # 746
