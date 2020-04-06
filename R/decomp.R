@@ -1,6 +1,6 @@
 #' Decomposition
 #'
-#' @param forc_st Soil temperature (K)
+#' @param forc_st Soil temperature (degrees Celsius)
 #' @param forc_sw Soil moisture (fraction)
 #' @param psi Soil water potential at saturation (MPa)
 #' @param forc_npp forc_npp
@@ -212,12 +212,12 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   #   698 	!~ f_MI_LM_des = 0.
   # 699 	!~ end if
 
-
-  if (MINERAL > M_Lmin) {
-    f_MI_LM_des <- Vm_l * (MINERAL - M_Lmin) / (km_l + MINERAL - M_Lmin) * t_scalar * w_scalar
-  } else {
-    f_MI_LM_des <- 0
-  }
+#This process is commented out in the original code because desorption/sorption represented with one double-way equation
+  # if (MINERAL > M_Lmin) {
+  #   f_MI_LM_des <- Vm_l * (MINERAL - M_Lmin) / (km_l + MINERAL - M_Lmin) * t_scalar * w_scalar
+  # } else {
+  #   f_MI_LM_des <- 0
+  # }
   # 700
   # 701 	! LMWC -> MINERAL: This desorption function is from Mayes 2012, SSAJ
   # 702 	klmc_min = (10.0 ** (-0.186 * pH - 0.216)) / 24.0
@@ -396,7 +396,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 807 	LMWC = LMWC + (f_PO_LM_dep + f_MI_LM_des - f_LM_leaching - f_LM_MI_sor - f_LM_MB_uptake - temp2) + forc_npp / 3.
   # Update state variables
   # Equation 7 in Abramoff et al. (2017)
-  LMWC <- LMWC + (f_PO_LM_dep + f_MI_LM_des - f_LM_leaching - f_LM_MI_sor - f_LM_MB_uptake - temp2) + forc_npp / 3
+  LMWC <- LMWC + (f_PO_LM_dep  - f_LM_leaching - f_LM_MI_sor - f_LM_MB_uptake - temp2) + forc_npp / 3 #+ f_MI_LM_des
   # 808
   # 809 	POM = POM + (f_SO_PO_break - f_PO_LM_dep - f_PO_SO_agg) + forc_npp * 2. / 3.
   # Equation 1 in Abramoff et al. (2017)
@@ -408,7 +408,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 813 !	print *, "MB, LM_MB, MB_Mi, MB_ATM", MB, f_LM_MB_uptake, f_MB_MI_sor, f_MB_atm
   # 814
   # 815 	MINERAL = MINERAL + (f_LM_MI_sor + f_MB_MI_sor + f_SO_MI_break - f_MI_LM_des - f_MI_SO_agg)
-  MINERAL <- MINERAL + (f_LM_MI_sor + f_MB_MI_sor + f_SO_MI_break - f_MI_LM_des - f_MI_SO_agg)
+  MINERAL <- MINERAL + (f_LM_MI_sor + f_MB_MI_sor + f_SO_MI_break  - f_MI_SO_agg) #- f_MI_LM_des
   # 816
   # 817 	SOILAGG = SOILAGG + (f_PO_SO_agg + f_MI_SO_agg - f_SO_PO_break - f_SO_MI_break)
   SOILAGG <- SOILAGG + (f_PO_SO_agg + f_MI_SO_agg - f_SO_PO_break - f_SO_MI_break)
@@ -419,10 +419,10 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 822 end subroutine decomp
   # 823 	! decomposition subroutine end
   list(LMWC = LMWC, POM = POM, MB = MB, MINERAL = MINERAL, SOILAGG = SOILAGG,
-       f_LM_leaching = f_LM_leaching, f_MI_LM_des = f_MI_LM_des,
+       f_LM_leaching = f_LM_leaching,
        f_LM_MI_sor = f_LM_MI_sor, f_LM_MB_uptake = f_LM_MB_uptake,
        f_PO_LM_dep = f_PO_LM_dep, f_MB_MI_sor = f_MB_MI_sor,
        f_PO_SO_agg = f_PO_SO_agg, f_MI_SO_agg = f_MI_SO_agg,
        f_SO_PO_break = f_SO_PO_break, f_SO_MI_break = f_SO_MI_break,
-       f_MB_atm = f_MB_atm)
+       f_MB_atm = f_MB_atm) #f_MI_LM_des = f_MI_LM_des,
 }
