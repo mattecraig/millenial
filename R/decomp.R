@@ -250,11 +250,7 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
   # 716 	else
   #   717 	f_LM_MI_sor = LMWC * 0.9
   # 718 	end if
-  if (f_LM_MI_sor < (LMWC * 0.9)) {
-    f_LM_MI_sor <- f_LM_MI_sor
-  } else {
-    f_LM_MI_sor <- LMWC * 0.9
-  }
+  f_LM_MI_sor <- min(f_LM_MI_sor, LMWC*.9)
   # 719
   # 720 	!~ if(f_LM_MI_sor < 0) then
   # 721 	!~ f_LM_MI_sor = 0.
