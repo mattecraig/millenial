@@ -24,6 +24,11 @@ decomp <- function(forc_st, forc_sw, psi, forc_npp, forc_roots,
                    SOILAGG, klmc, kes, k_leaching, CUEref, CUET, Taeref,
                    Vpom_lmc, kpom, kmic, Vpom_agg, kpom_agg, AGGmax,
                    Vmin_agg, kmin_agg, kagg, M_Lmin, Vm_l, km_l) {
+
+  # 	262 AGGmax = AGGmax * (0.0265 * clay * 100.0 + 0.1351)
+
+  AGGmax <- AGGmax * (0.0265 * clay * 100.0 + 0.1351)
+
   #   537 !	decomposition subroutine start
   #   538 subroutine decomp(forc_st, forc_sw, psi, forc_npp, forc_roots, &
   #                           539 		forc_exoenzyme, clay, LMWC, POM, MB, MINERAL, SOILAGG, f_LM_leaching, f_MI_LM_des,&
